@@ -1,10 +1,20 @@
-const router = require('express').Router();
-const apiRoutes = require('./api');
+const express = require('express');
+const mongoose = require('mongoose');
 
-router.use('/api', apiRoutes);
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-router.use((req, res)=> {
-    res.status(404).send('404 Error');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(require('./routes'));
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network', {
+  useFindAndModify: false,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
-module.exports = router; 
+mongoose.set('debug', true);
+
+app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
