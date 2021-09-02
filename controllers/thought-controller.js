@@ -12,7 +12,7 @@ const thoughtController = {
     },
 
     //obtain thoughts by using the id
-    getThoughtbyId({params}, res){
+    getThoughtById({params}, res){
         Thought.findOne({ _id: params.id })
         .then(dbThoughts => {
             if (!dbThoughts){
@@ -76,7 +76,7 @@ const thoughtController = {
     }, 
 
     //delete thoughts
-    removeThought({ params }, res){
+    deleteThought({ params }, res){
         Thought.findOneAndDelete ({ _id: params.id})
         .then(dbThoughts => {
             if (!dbThoughts){
