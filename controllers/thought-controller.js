@@ -4,7 +4,7 @@ const thoughtController = {
     //obtain all thoughts
     getAllThought(req, res){
         Thought.find({})
-        .then(dbThoughts = res.json(dbThoughts))
+        .then(dbThoughts => res.json(dbThoughts))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
@@ -31,19 +31,21 @@ const thoughtController = {
     createThought({ body }, res){
         Thought.create(body)
         .then(dbThoughts => {
-            return User.findOneandUpdate(
+            console.log(dbThoughts)
+            return User.findOneAndUpdate(
                 {_id: body.userId}, 
                 {$push: {thoughts: dbThoughts._id }}, 
-                {new: true, 
-                runValidators: true}
-            );
+                {new: true}
+            )
+            // .then(User => {return res.json(User)});
         })
         .then(dbThoughts => {
+            console.log(dbThoughts)
             if (!dbThoughts){
                 res.sendStatus(404).json({ message: 'No thought associated with this ID is found'});
-                return
+                return;
             }
-            res.json({dbThoughts})
+            res.json(dbThoughts)
         })
         .catch(err => {
             console.log(err);
@@ -67,7 +69,7 @@ const thoughtController = {
                 res.sendStatus(404).json({ message: 'No thought associated with this ID is found'});
                 return
             }
-            res.json({dbThoughts})
+            res.json(dbThoughts)
         })
         .catch(err => {
             console.log(err);
@@ -83,7 +85,7 @@ const thoughtController = {
                 res.sendStatus(404).json({ message: 'No thought associated with this ID is found'});
                 return
             }
-            res.json({dbThoughts})
+            res.json(dbThoughts)
         })
         .catch(err => {
             console.log(err);
@@ -104,7 +106,7 @@ const thoughtController = {
                 res.sendStatus(404).json({ message: 'No thought associated with this ID is found'});
                 return
             }
-            res.json({dbThoughts})
+            res.json(dbThoughts)
         })
         .catch(err => {
             console.log(err);
@@ -125,7 +127,7 @@ const thoughtController = {
                 res.sendStatus(404).json({ message: 'No thought associated with this ID is found'});
                 return
             }
-            res.json({dbThoughts})
+            res.json(dbThoughts)
         })
         .catch(err => {
             console.log(err);

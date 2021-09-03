@@ -1,8 +1,9 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 const userController = {
     //create a user
     createUser({ body }, res){
+        console.log(body);
         User.create(body)
         .then(dbUsers => res.json(dbUsers))
         .catch(err => 
@@ -48,7 +49,7 @@ const userController = {
         User.findOneAndDelete(
             {_id: params.id}
         )
-        .then(dbUser => {
+        .then(dbUsers => {
             if (!dbUsers){
                 res.status(404).json({ message: 'No user associated with this ID'});
                 return;
@@ -66,7 +67,7 @@ const userController = {
             {new: true, 
             runValidators: true}
         )
-        .then(dbUser => {
+        .then(dbUsers => {
             if (!dbUsers){
                 res.status(404).json({ message: 'No user associated with this ID'});
                 return;
@@ -84,7 +85,7 @@ const userController = {
             {new: true, 
             runValidators: true}
         )
-        .then(dbUser => {
+        .then(dbUsers => {
             if (!dbUsers){
                 res.status(404).json({ message: 'No user associated with this ID'});
                 return;
